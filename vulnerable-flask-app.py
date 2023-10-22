@@ -3,7 +3,7 @@ import subprocess
 from werkzeug.datastructures import Headers
 from werkzeug.utils import secure_filename
 import sqlite3
-
+#fer
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER']="/home/kali/Desktop/upload"
