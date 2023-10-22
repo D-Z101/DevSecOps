@@ -10,4 +10,4 @@ spec:
     app: flask
   ports:
   - port: 8081
-    nodePort: <tbd>
+    nodePort: 30007
