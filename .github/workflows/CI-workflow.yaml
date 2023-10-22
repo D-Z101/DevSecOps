@@ -33,16 +33,9 @@ jobs:
           python3 -m pip install semgrep
           if [ -f ./requirements.txt ]; then pip install -r ./requirements.txt; fi
 
-      - name: Set up Semgrep
-        run: |
-          wget -O semgrep https://semgrep.dev/get-semgrep.sh
-          chmod +x semgrep
-          ./semgrep --config=semgrep-config.yml
-        # Utilisez semgrep-config.yml pour définir vos règles Semgrep
       - name: Semgrep SAST Scan
         run: |
-          semgrep --config=semgrep-config.yml 
-
+          docker run --rm -v $(pwd):/code returntocorp/semgrep -c /code/semgrep-config.yml /code
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
