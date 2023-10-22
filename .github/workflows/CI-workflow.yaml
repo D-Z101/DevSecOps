@@ -41,7 +41,7 @@ jobs:
         # Utilisez semgrep-config.yml pour définir vos règles Semgrep
       - name: Semgrep SAST Scan
         run: |
-          semgrep --config=semgrep-config.yml .
+          semgrep --config=semgrep-config.yml 
 
       
       - name: Set up Docker Buildx
