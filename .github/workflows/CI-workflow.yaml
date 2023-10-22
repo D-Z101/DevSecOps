@@ -1,0 +1,69 @@
+name: CI pipeline
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - "Dockerfile"
+      - "vulnerable-flask-app.py"
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: '${{ github.ref_name }}'
+          token: ${{ secrets.GITLEAKS }}
+      
+          
+
+      - name: Install dependencies 
+        run: |
+          python -m pip install --upgrade pip
+          python3 -m pip install semgrep
+          if [ -f ./requirements.txt ]; then pip install -r ./requirements.txt; fi
+
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build image from Dockerfile
+        run: |
+          docker build -t test_${{ github.run_number }}:v1 .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Image
+        run: |
+          docker tag test_${{ github.run_number }}:v1 hashko/devsecopslab:v${{ github.run_number }}
+          docker push <dockeruser>/<dockerrepo>:v${{ github.run_number }}
+
+      - name: Checkout the ENV Repo
+        uses: actions/checkout@v3
+        with:
+          repository: '<dockeruser>/<dockerrepo>'
+          ref: 'main'
+          token:  ${{ secrets.GITLEAKS}}
+
+      - name: Set up YQ command
+        run: |
+          wget https://github.com/mikefarah/yq/releases/download/v4.2.0/yq_linux_amd64.tar.gz -O - | sudo tar xz && sudo mv yq_linux_amd64 /usr/bin/yq
+
+      - name: Edit manifests in ENV repo
+        run: |
+          yq eval -i '.spec.template.spec.containers[0].image = "<dockeruser>/<dockerrepo>:v${{ github.run_number }}"' ./kubernetes/deployment.yaml
+
+      - name: Commit and Push to ENV repo
+        run: |
+          git config  user.email "your email"
+          git config  user.name "${{ github.actor }}"
+          git commit -a -m 'Env file is updated with the new image ${{ github.ref_name }}'
+          git push https://${{ secrets.GITLEAKS }}@github.com<dockeruser>/<dockerrepo>.git
