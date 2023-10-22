@@ -18,8 +18,15 @@ jobs:
         with:
           ref: '${{ github.ref_name }}'
           token: ${{ secrets.GITLEAKS }}
-      
-          
+
+      - name: scan gitleaks
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS: ${{ secrets.GITLEAKS}}
 
       - name: Install dependencies 
         run: |
