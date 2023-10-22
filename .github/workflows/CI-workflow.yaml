@@ -35,7 +35,7 @@ jobs:
 
       - name: Semgrep SAST Scan
         run: |
-          semgrep -c /path/to/semgrep-config.yml
+          semgrep -c semgrep-config.yml .
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
