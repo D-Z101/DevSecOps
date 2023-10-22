@@ -1,7 +1,7 @@
 rules:
   - id: weak-password-hash
     languages: [python]
-    severity: error  # Spécifiez le niveau de gravité ici
+    severity: ERROR  # Spécifiez le niveau de gravité ici (en majuscules)
     message: "Weak password hash algorithm detected (MD5 or SHA-1)."
     patterns:
       - pattern: "md5"
