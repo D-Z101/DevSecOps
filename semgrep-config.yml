@@ -1,4 +1,5 @@
 rules:
-  - id: suspicious-regex
-    pattern: '(?i)(password|secret).*=\s*[\'"](.*?)[\'"]'
-    message: "Potential secret or password found."
+  - id: weak-password
+    patterns:
+      - pattern: '(?i)\b\w{1,7}\b'
+    message: "Weak password detected (less than 8 characters)."
