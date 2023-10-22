@@ -1,5 +1,7 @@
 rules:
-  - id: weak-password
+  - id: weak-password-hash
+    languages: [python] # Spécifiez le langage du code que vous souhaitez analyser
+    message: "Weak password hash algorithm detected (MD5 or SHA-1)."
     patterns:
-      - pattern: '(?i)\b\w{1,7}\b'
-    message: "Weak password detected (less than 8 characters)."
+      - pattern: "md5" # Exemple de nom de fonction ou de variable à rechercher
+      - pattern: "sha1"
