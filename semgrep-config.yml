@@ -1,0 +1,4 @@
+rules:
+  - id: suspicious-regex
+    pattern: '(?i)(password|secret).*=\s*[\'"](.*?)[\'"]'
+    message: "Potential secret or password found."
