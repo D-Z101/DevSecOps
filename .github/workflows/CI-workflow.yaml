@@ -19,11 +19,6 @@ jobs:
           ref: '${{ github.ref_name }}'
           token: ${{ secrets.GITLEAKS }}
 
-      - name: scan gitleaks
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS: ${{ secrets.GITLEAKS}}
-
       - name: Install dependencies 
         run: |
           python -m pip install --upgrade pip
