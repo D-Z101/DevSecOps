@@ -6,6 +6,7 @@ import sqlite3
 #changement
 #er
 #s
+#f
 #d
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER']="/home/kali/Desktop/upload"
