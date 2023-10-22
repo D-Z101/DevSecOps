@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+        - name: backend
+          image: <dockeruser>/<dockerrepo>:v17
+          resources:
+            requests:
+              memory: "50Mi"
+            limits:
+              memory: "75Mi"
