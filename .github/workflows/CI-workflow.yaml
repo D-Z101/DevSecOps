@@ -43,13 +43,13 @@ jobs:
 
       - name: Push Image
         run: |
-          docker tag test_${{ github.run_number }}:v1 hashko/devsecopslab:v${{ github.run_number }}
-          docker push <dockeruser>/<dockerrepo>:v${{ github.run_number }}
+          docker tag test_${{ github.run_number }}:v1 zeyrouch/devsecopslab:v${{ github.run_number }}
+          docker push zeyrouch/devsecopslab:v${{ github.run_number }}
 
       - name: Checkout the ENV Repo
         uses: actions/checkout@v3
         with:
-          repository: '<dockeruser>/<dockerrepo>'
+          repository: 'D-Z101/DevSecOps'
           ref: 'main'
           token:  ${{ secrets.GITLEAKS}}
 
@@ -59,11 +59,11 @@ jobs:
 
       - name: Edit manifests in ENV repo
         run: |
-          yq eval -i '.spec.template.spec.containers[0].image = "<dockeruser>/<dockerrepo>:v${{ github.run_number }}"' ./kubernetes/deployment.yaml
+          yq eval -i '.spec.template.spec.containers[0].image = "zeyrouch/devsecopslab:v${{ github.run_number }}"' ./kubernetes/deployment.yaml
 
       - name: Commit and Push to ENV repo
         run: |
-          git config  user.email "your email"
-          git config  user.name "${{ github.actor }}"
+          git config  user.email "diazeinebou101@gmail.com"
+          git config  user.name "D-Z101"
           git commit -a -m 'Env file is updated with the new image ${{ github.ref_name }}'
-          git push https://${{ secrets.GITLEAKS }}@github.com<dockeruser>/<dockerrepo>.git
+          git push https://${{ secrets.GITLEAKS }}@github.com/D-Z101/DevSecOps.git
