@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: zeyrouch/devsecopslab:v31
+          image: zeyrouch/devsecopslab:v32
           resources:
             requests:
               memory: "50Mi"
