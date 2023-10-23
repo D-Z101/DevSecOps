@@ -10,6 +10,7 @@ import sqlite3
 #Emett
 #alice
 #caroline
+#Naruto
 #Pain
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER']="/home/kali/Desktop/upload"
