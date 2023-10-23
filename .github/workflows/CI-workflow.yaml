@@ -53,6 +53,9 @@ jobs:
           #sudo apt-get update -qy
           #sudo apt-get install trivy
 
+      - name: Install jq
+        run: sudo apt-get install jq -y
+        
       - name: Run Trivy Vulnerability Scan
         run: |
            trivy your-docker-image --format json | jq -r '.[].Vulnerabilities[] | select(.Severity | contains("HIGH") or contains("CRITICAL"))'
