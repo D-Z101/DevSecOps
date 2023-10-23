@@ -47,10 +47,7 @@ jobs:
         
       # Run Trivy for vulnerability scanning
       - name: Run Trivy for vulnerability scanning
-      - name: Pull Trivy Docker image
-        run: docker pull aquasec/trivy
-
-      - name: Run Trivy vulnerability scan
+      
         run: docker run --rm -v $(pwd):/workdir -w /workdir aquasec/trivy python:3.10.11-slim-buster
 
       - name: Login to Docker Hub
