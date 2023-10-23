@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Trivy Vulnerability Scan
         run: |
-           trivy python:3.10.11-slim-buster --severity HIGH,CRITICAL
+           trivy python:3.10.11-slim-buster --format table --ignore-unfixed | grep -E '(HIGH|CRITICAL)'
            
       - name: Login to Docker Hub
         uses: docker/login-action@v3
